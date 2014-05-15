@@ -1,0 +1,48 @@
+<html>
+<head>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+<p>This is a test paragraph.</p>
+<p>This is a second test paragraph.</p>
+<p>Third!</p>
+</body>
+<script>
+d3.select("body").selectAll("p")
+    .data([4, 8, 15, 16, 23, 42])
+  .enter().append("p")
+    .text(function(d) { return "I’m number " + d + "!"; });
+
+
+d3.selectAll("p").style("color", "white");
+d3.select("body").style("background-color", "white");
+d3.selectAll("p").style("color", function() {
+  return "hsl(" + Math.random() * 360 + ",100%,50%)";
+});
+d3.selectAll("p")
+    .data([23, 42, 54])
+    .style("font-size", function(d) { return d + "pt"; });
+
+// Update…
+var p = d3.select("body").selectAll("p")
+    .data([4, 8, 15, 16, 23, 42])
+    .text(String);
+
+// Enter…
+p.enter().append("p")
+    .text(String);
+
+// Exit…
+p.exit().remove();
+d3.select("body").transition().duration(750)
+    .style("background-color", "black");
+
+d3.selectAll("circle").transition()
+    .duration(750)
+    .delay(function(d, i) { return i * 10; })
+    .attr("r", function(d) { return Math.sqrt(d * scale); });
+
+
+</script>
+<a href="index.html">index</a>
+</html>

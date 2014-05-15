@@ -1,0 +1,31 @@
+<html>
+<head>
+<style>
+</style>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+function dome(){
+var data=[32, 57, 112, 293, 400, 500, 700];
+var colors=["steelblue","green","red","orange","yellow","grey","purple"];
+var circle=d3.select("svg").selectAll("circle").data(data);
+  circle.enter()
+  .append("circle")
+  .style("fill", function(d,i){return colors[i];})
+  .style("font-color","black")
+  //.attr("r", function(d){return 10+Math.sqrt(d);})
+  //.attr("cy", function(d){var r = (10+Math.sqrt(d));return r/2+Math.random() * (window.innerHeight-r);})
+  //.attr("cx", function(d){var r = (10+Math.sqrt(d));return r/2+Math.random() * (window.innerWidth-r);})
+  .attr("r", Math.sqrt)
+  .attr("cy", String)
+  .attr("cx", String)
+;
+  //circle.exit().remove();
+}
+</script>
+</head>
+<body onLoad="dome()">
+<a class="back" href="index.html">index</a>
+<svg>
+</svg>
+</body>
+</html>
