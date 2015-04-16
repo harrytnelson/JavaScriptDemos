@@ -1,0 +1,175 @@
+/**
+ * Styles used by the jsontree.js  jQuery widget
+ */
+
+div.jtree-container {
+	vertical-align: top;
+}
+
+ul.menu {
+    list-style-type: none;
+    padding-left: 6pt;
+    margin: 2px;
+}
+
+ul.menu li:hover {
+    background-color: white;
+    color: navy;
+    cursor: hand; cursor: pointer;
+}
+
+div.ctx-menu {
+	background-color: #eee;
+}
+
+div.ctx-menu table {
+	width: 100%;
+}
+
+ul.jtree-object {
+	padding-top: 0px;
+	margin-top: 0px;
+    list-style-type: none;
+    padding-left: 6pt;
+    vertical-align: top;
+    border: 1px solid lightsteelblue;
+}
+
+.leaf {
+    border: none;
+    cursor: default;
+    background:url(../images/leaf.png) 0 0;
+}
+
+span.node {
+    font: bold 11pt arial, sans-serif;
+}
+
+#status {
+/*	width: 100%; */
+	padding: 5px;
+	color: green;
+}
+
+#menu-bar {
+/*	width: 20%; */
+    text-align: right;
+}
+
+#title {
+/*	width: 100%; */
+}
+
+#titlebar {
+    width: 100%;
+    font: 8pt Arial;
+    padding: 0px;
+    margin: 0px;
+    background-color: #ddd;	
+}
+
+#titlebar td {
+    height: 10px;
+    padding: 0px;
+}
+
+.hand:hover {
+    cursor: hand; cursor: pointer;	
+}
+
+span.node-value {
+    font: normal 11pt arial, sans-serif;
+}
+
+.node-open {
+    border: none; 
+    vertical-align: middle;
+    background:url(../images/node_open.png) no-repeat center;
+}
+
+.node-closed {
+    border: none;
+    vertical-align: middle;
+    background: url(../images/node_closed.png) no-repeat center;
+}
+
+.root {
+    border: none;
+    background-image: url(../images/node_open.png) no-repeat center;
+}
+
+.selected {
+    font-style: bold;
+}
+
+img:hover {
+    /*cursor:crosshair; */
+    cursor: hand; cursor: pointer;
+}
+
+span.data-type {
+    vertical-align: middle;
+}
+
+#ctx-menu {
+	z-index: 9900;
+	border: 3px blue groove;
+    position:absolute; 
+    display: none; 
+    width:100px; 
+    background-color: lightsteelblue;
+}
+
+#nv-edit {
+	z-index: 9999;
+	border: 3px green groove;
+    position:absolute; 
+    display: none;
+    background-color: #eeffee;
+}
+
+#cp-edit {
+	z-index: 9999;
+	padding: 2px;
+	border: 3px blue groove;
+    position:absolute; 
+    display: none;
+    background-color: #ddeeff;
+}
+
+#sp-tree-edit {   /* hack - use better name */
+	z-index: 9999;
+	padding: 2px;
+	border: 1px solid #222222;
+    position:absolute; 
+    display: none;
+    background-color: #ddeeff;
+}
+
+#copy-paste {
+	width: 250px;
+	height: 100px;
+    background-color: white;
+}
+
+.button-bar {
+	text-align:right;
+	width: 100%;
+}
+
+.button-bar-title {
+	float: left;
+}
+
+.json-changed {
+	color: blue;
+}
+
+.json-new {
+	color: darkgreen;
+}
+
+#node-editor {
+    position: absolute;
+    z-index: 9999;
+}

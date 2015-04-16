@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" type="text/css" href="styles/jsontree.css">
+<style>
+div#tree1 {
+    width: 450px;
+}
+</style>
+<script src="./jquery.min.js" ></script>
+<script src="./jsontree.js"></script>
+<script>
+
+function showJsonTree(target, isreadonly) {
+    var testdata = filterData( $("#sample-json").val() );
+    var readonly = (!isreadonly) ? false : true;
+    
+    $(target).jsontree({
+              format: $('#use-meta').is(':checked') ? 'meta' : 'json',
+        anyExtraData: 'this can be anything',
+                data: JSON.stringify(testdata),
+               title: 'A Cool Tree',                // if format == meta or data then title is root node name
+            readonly: readonly,
+                menu: readonly ? [] : ['Save', 'Copy'],
+              onMenu: function(ctl, name, data) {
+                        switch (name) {
+                            case 'save':
+                                return saveData( data );
+                                  
+                            case 'copy':
+                                alert('Copy not supported');
+                                break;
+                            
+                            default:
+                                alert('Unsupported menu item:' + name);
+                                break;
+                        }
+                      } 
+ /*         
+        onSelect : function(ctl,nod) {
+            alert('The node ' + nod.name + ' with id=' + nod.id + ' was selected');
+        },
+        
+        showMenu: 'click', //'rclick',
+        */
+    });
+    
+    function saveData(dat) {
+        $('#json-out').text( 'Extra\n' + dat.anyExtraData + '\n\nJSON:\n' + dat.json() );
+    }
+    
+    
+}
+
+function filterData(json) {
+	if (!json)
+		return {};
+	
+	if (typeof json == 'string')
+		try {
+			json = json.replace(/\s+/g, ' ');
+		    json = JSON.parse( json );
+		    $("#json-out").text( JSON.stringify(json, null, 4) );
+	    } catch(e) {
+	    	alert(e);
+	    	return "";
+	    }
+	return json;
+}
+</script>
+</head>
+
+<body>
+
+    <div>
+       Edit and use this JSON to build a tree.  
+       <div>
+       <textarea id="sample-json" rows="12" cols="100">
+         {  "name": "Freddy", 
+            "age": "10",
+            "car" : {
+              "make" : "Chevy",
+             "model" : "Fastcar"
+            }, 
+            "boats" : [
+               "Sailboat", "Motorboat", "Peddle Boat"
+            ], 
+            "id": "10000" 
+          }
+       </textarea>
+       </div>
+       <div>
+         Select sample: 
+         <select id='samples'>
+             <option value='0'>Person</option>
+             <option value='1'>Hardware Asset</option>
+             <option value='2'>Server CI</option>
+             <option value='3'>Deep</option>
+             <option value='4'>Meta</option>
+             <option value='5'>Large Meta</option>
+             <option value='6'>Create Mailbox</option>
+         </select>
+       </div>
+       Use Meta: <input type="checkbox" value="meta" id="use-meta" />
+    </div>
+    
+    <div id="context-menu">
+        
+    </div>
+    
+    <div>
+      Click to show JSON tree:
+      <button onclick="showJsonTree('#tree1')">Show tree</button>
+    </div>
+    
+    <div id='tree1'>
+    </div>
+    
+    <div>
+       <textarea id="json-out" rows="12" cols="100">
+       </textarea>
+    </div>
+</body>
+
+<script>
+
+$("#samples").change(function(evt) {
+	$('#sample-json').val( JSON.stringify(samples[$(this).val()])  );
+	$('#use-meta').prop('checked', parseInt($(this).val()) > 3);
+});
+
+var samples = [
+
+    {   // [0] = Person
+    	Name: "Fred Flintstone",
+    	Address: {
+    		street1: "303 Cobblestone Way",
+    		street2: "",
+    	 	   city: "Bedrock",
+    		    zip: "99123"
+    	}
+    },
+    
+    {	// [1] = Hardware Asset
+    	      display_name: "P1000230 - IBM 2687DTU",
+    	    model_category: "81feb9c137101000deeabfc8bcbe5dc4",
+    	configuration_item: "",
+    	             model: "a9a2d0c3c6112276010db16c5ddd3461",
+    	          quantity: 1,
+    	         asset_tag: "P1000230",
+    	     serial_number: "L3BB911",
+    	             state: "In Use",
+    	          substate: "none",
+    	       assigned_to: {
+    		                 user_name: "Joe Dirt",
+    		                 sys_id: "d2cee0a87b533000a2cabff13f4d4d12"
+    	                    },
+    	        location: {
+    		                   name: "San Diego North Central - Pickup/Dropoff",
+    						 street: "123 Oceanview Ct.",
+    		   				   city: "San Diego",
+    		  				  state: "CA",
+    	  	    			    zip: "92120"
+    					  }
+    },
+    
+    {	// [2] = Server CI
+    	name: "BOW-IBM",
+    	company: {
+    		name: "ACME North America",
+    		sys_id: "31bea3d53790200044e0bfc8bcbe5dec"
+    	},
+    	asset_tag: "P1000230",
+    	serial_number: "L3BB911",
+    	manufacturer: {
+    		name: "Lenovo",
+    		sys_id: "aa0a6df8c611227601cd2ed45989e0ac"
+    	},
+    	model_id: {
+    		name: "Lenovo ThinkStation S20",
+    		sys_id: "a9a2d0c3c6112276010db16c5ddd3461",
+    		cost: 3665.00
+    	},
+    	asset: {
+    		name: "P1000230 - Lenovo ThinkStation S20",
+    		sys_id: "cbc1ba8837f3100044e0bfc8bcbe5dad"
+    	}
+    },
+    
+    {	// [3] = Deep
+	  /* a1: [{ a1a: 'a1a', a1b: 'a1b' }], */
+	   a2: [ 'a2a','a2b'],
+	   o1: {
+		   o1a1: [1, 2, 3],
+		   o1o1: {
+			   fieldA: "field A",
+			   fieldB: {
+				   fieldB1: {
+					   fieldB1a: "fieldB1a is here",
+					   fieldB1b: 10
+				   },
+				   fieldB2: "be two"
+			   }
+		   },
+		   o1a2: ['a', 'b', 'c', {d:1234}]
+	   }	   
+    },
+    
+    {  // [4] = meta
+	"name" : "child1",
+	"properties" : [ {
+		"name" : "two",
+		"properties" : [ {
+				"name" : "a1",
+				"value" : "a1",
+				"type" : "STRING"
+			}, {
+				"name" : "a2",
+				"value" : "a2",
+				"type" : "STRING"
+			} ],
+		"type" : "OBJECT"
+	}, {
+		"name" : "tree",
+		"value" : "three",
+		"type" : "STRING"
+	}, {
+		"name" : "one",
+		"value" : "one",
+		"type" : "STRING"
+	} ]
+	
+    },
+    
+    { // [5] meta large
+   	    "name" : "parent",
+	    "type" : "object",
+	    "properties" : {
+		    "two" : {
+			    "name" : "two",
+			    "properties" : [ {
+				    "name" : "aryf1",
+				    "type" : "number"
+			    }, {
+				    "name" : "aryf2",
+				    "type" : "string"
+			    } ],
+			    "type" : "array"
+		    },
+		    "tree" : {
+			    "name" : "tree",
+			    "properties" : {
+				    "a1" : {
+					    "name" : "a1",
+					    "type" : "string"
+				    },
+				    "a2" : {
+					    "name" : "a2",
+					    "type" : "string"
+				    }
+			    },
+			    "type" : "object"
+		    },
+		    "one" : {
+			    "name" : "one",
+			    "type" : "string"
+		    }
+	    }
+    },
+    
+    {  // [6] Create MB demo
+	"name" : "CreateMailbox",
+	"type" : "object",
+	"properties" : {
+		"Alias" : {
+			"name" : "Alias",
+			"type" : "string"
+		},
+		"Domain" : {
+			"name" : "Domain",
+			"type" : "string"
+		},
+		"Firstname" : {
+			"name" : "Firstname",
+			"type" : "string"
+		},
+		"Password" : {
+			"name" : "Password",
+			"type" : "string"
+		},
+		"MiddleInitial" : {
+			"name" : "MiddleInitial",
+			"type" : "string"
+		},
+		"Lastname" : {
+			"name" : "Lastname",
+			"type" : "string"
+		},
+		"Optionalparameters" : {
+			"name" : "Optionalparameters",
+			"properties" : {
+				"ModeratedBy" : {
+					"name" : "ModeratedBy",
+					"type" : "string"
+				},
+				"HoldForMigration" : {
+					"name" : "HoldForMigration",
+					"type" : "string"
+				},
+				"ModerationEnabled" : {
+					"name" : "ModerationEnabled",
+					"type" : "string"
+				},
+				"DomainController" : {
+					"name" : "DomainController",
+					"type" : "string"
+				}
+			},
+			"type" : "object"
+		},
+		"Hostname" : {
+			"name" : "Hostname",
+			"type" : "string"
+		}
+	}
+    }
+    
+    
+];
+</script>
+</html>
